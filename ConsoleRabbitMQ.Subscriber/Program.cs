@@ -7,8 +7,9 @@ factory.Uri = new Uri(uriString: "amqps://uorpkohs:rxJ2I2ikiuaLDk4uj31Odn1_qLxPY
 using var connection = factory.CreateConnection();
 var channel = connection.CreateModel(); // Yeni bir kanal
 
+channel.BasicQos(0, 1, false);
 var consumer = new EventingBasicConsumer(model:channel);
-channel.BasicConsume(queue: "hello-queue", autoAck: true, consumer: consumer);
+channel.BasicConsume(queue: "hello-queue", autoAck: false, consumer: consumer);
 
 /*
 	queue: Mesajların alınacağı kuyruk adıdır. Bu örnekte "hello-queue" olarak belirtilmiş. Bu, mesajların alınacağı kuyruktur.
@@ -24,4 +25,6 @@ void Consumer_Received(object? sender, BasicDeliverEventArgs e)
 {
 	var message = Encoding.UTF8.GetString(e.Body.ToArray());
 	Console.WriteLine("Mesajınız:" + message);
+
+	channel.BasicAck(e.DeliveryTag, false);
 }

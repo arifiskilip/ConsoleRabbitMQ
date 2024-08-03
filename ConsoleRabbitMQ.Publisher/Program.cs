@@ -16,21 +16,25 @@ exclusive: Kuyruğun özel olup olmadığını belirler. true olarak ayarlanırs
 
 autoDelete: Kuyruğun otomatik silinip silinmeyeceğini belirler. true olarak ayarlanırsa, kuyruk son tüketicisi (kuyruğa mesaj gönderip alan) kalmadığında otomatik olarak silinir. false olarak ayarlanırsa, kuyruk manuel olarak silinmelidir. */
 
-string message = "Hello word!";
-var messageBody = Encoding.UTF8.GetBytes(message);
-channel.BasicPublish(exchange:string.Empty,
-	routingKey:"hello-queue",basicProperties:null,body:messageBody);
-/* 
-	exchange: Mesajın yönlendirileceği değişkenin (exchange) adıdır. Bu örnekte string.Empty olarak belirtilmiş, yani varsayılan değişken kullanılıyor. Varsayılan değişken genellikle "direct" değişken olarak adlandırılır ve mesaj doğrudan belirtilen kuyruklara yönlendirilir.
+Enumerable.Range(1, 20).ToList().ForEach(x =>
+{
+	string message = $"Message {x}";
+	var messageBody = Encoding.UTF8.GetBytes(message);
+	channel.BasicPublish(exchange: string.Empty,
+		routingKey: "hello-queue", basicProperties: null, body: messageBody);
+	/* 
+		exchange: Mesajın yönlendirileceği değişkenin (exchange) adıdır. Bu örnekte string.Empty olarak belirtilmiş, yani varsayılan değişken kullanılıyor. Varsayılan değişken genellikle "direct" değişken olarak adlandırılır ve mesaj doğrudan belirtilen kuyruklara yönlendirilir.
 
-	routingKey: Mesajın yönlendirileceği kuyruk adıdır. Bu örnekte "hello-queue" olarak belirtilmiş. Routing key, mesajın hangi kuyruklara yönlendirileceğini belirler. Bu parametre, kullanılan değişkenin türüne bağlı olarak farklı anlamlara gelebilir, ancak burada basit bir durumda kuyruk adını belirtir.
+		routingKey: Mesajın yönlendirileceği kuyruk adıdır. Bu örnekte "hello-queue" olarak belirtilmiş. Routing key, mesajın hangi kuyruklara yönlendirileceğini belirler. Bu parametre, kullanılan değişkenin türüne bağlı olarak farklı anlamlara gelebilir, ancak burada basit bir durumda kuyruk adını belirtir.
 
-	basicProperties: Mesajın özelliklerini belirten bir nesnedir. Bu parametre null olarak ayarlanmış, bu da mesajın özelliklerinin varsayılan ayarlarla gönderileceği anlamına gelir. Bu özellikler arasında içerik türü, öncelik, mesajın TTL (Time To Live) süresi ve diğer meta veriler bulunabilir.
+		basicProperties: Mesajın özelliklerini belirten bir nesnedir. Bu parametre null olarak ayarlanmış, bu da mesajın özelliklerinin varsayılan ayarlarla gönderileceği anlamına gelir. Bu özellikler arasında içerik türü, öncelik, mesajın TTL (Time To Live) süresi ve diğer meta veriler bulunabilir.
 
-	body: Gönderilecek mesajın içeriğidir. Bu parametre genellikle bir byte[] (bayt dizisi) olarak belirtilir. Mesajın gerçek verisi burada yer alır.
+		body: Gönderilecek mesajın içeriğidir. Bu parametre genellikle bir byte[] (bayt dizisi) olarak belirtilir. Mesajın gerçek verisi burada yer alır.
 
-	Özetle, BasicPublish yöntemi RabbitMQ'ya mesaj gönderir.
- 
- */
+		Özetle, BasicPublish yöntemi RabbitMQ'ya mesaj gönderir.
 
-Console.WriteLine("Mesajınız gönderildi.");
+	 */
+
+	Console.WriteLine($"Mesajınız gönderildi {message}");
+});
+
